@@ -14,5 +14,35 @@
  */
 export default class UserTable {
   constructor(rows) {
+    this.rows = rows;
+    this._elem = this.render();
+  }
+
+  render() {
+    const table = document.createElement('table');
+
+    table.innerHTML = '<thead><tr><th>Имя</th><th>Возраст</th><th>Зарплата</th><th>Город</th><th></th></tr></thead><tbody>' 
+    + this.rows
+    .map((row) => `<tr><td>${row.name}</td><td>${row.age}</td><td>${row.salary}</td><td>${row.city}</td><td><button>X</button></td></tr>`)
+    .join('') + '</tbody>'
+
+    this.onClick(table);
+
+    return table;
+  }
+
+  onClick(table) {
+    table.addEventListener('click',({target}) => {
+      let btn = target.closest('button');
+      if(btn) {
+        let tr = target.closest('tr');
+        if(tr) {tr.remove()}
+      }
+    } )
+
+  }
+
+  get elem() {
+    return this._elem;
   }
 }
